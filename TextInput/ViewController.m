@@ -81,7 +81,29 @@ MMGrowingTextViewDelegate>
 #pragma mark 键盘即将显示
 - (void)keyBoardWillShow:(NSNotification *)note
 {
+    CGRect frame = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGFloat keyboardHeight = frame.size.height;
+    CGFloat tableViewHeight = kScreenHeight - keyboardHeight - senderView.height - 64;
     
+    //做动画
+    //拿到键盘动画的时间
+    NSValue *animationDurationValue = note.userInfo[UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationD;
+    [animationDurationValue getValue:&animationD];
+    
+    //拿到动画曲线
+    NSValue *animationCurve = note.userInfo[UIKeyboardAnimationCurveUserInfoKey];
+    UIViewAnimationCurve animationC;
+    [animationCurve getValue:&animationC];
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:animationD];
+    [UIView setAnimationCurve:animationC];
+    
+    _tableView.height = tableViewHeight;
+    senderView.transform = CGAffineTransformMakeTranslation(0, -keyboardHeight);
+    
+    [UIView commitAnimations];
 }
 
 - (void)keyBoardWillHide:(NSNotification *)note
