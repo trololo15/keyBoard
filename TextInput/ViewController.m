@@ -46,7 +46,7 @@ MMGrowingTextViewDelegate>
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
-//    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
     
     growTextView = [[MMGrowingTextView alloc] initWithFrame:CGRectMake(13, 10, kScreenWidth-26, 33)];
